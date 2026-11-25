@@ -1,0 +1,56 @@
+{
+  "package": "handoff-cn",
+  "status": "FIXTURE_NO_DOWNSTREAM",
+  "surface_registry_checked": false,
+  "surfaces": ["web-console", "eval-runner", "compliance-gate", "metrics-dashboard", "notification-center"],
+  "slices": [
+    {
+      "id": "SL-01",
+      "name": "eval-gate",
+      "depends_on": [],
+      "surfaces": ["web-console", "eval-runner"],
+      "requirements": ["R-01"],
+      "business_invariant": "无冻结评测集不得发布；BLOCK 不得被静默改为 ALLOW"
+    },
+    {
+      "id": "SL-02",
+      "name": "compliance-gate",
+      "depends_on": ["SL-01"],
+      "surfaces": ["compliance-gate", "web-console"],
+      "requirements": ["R-02", "R-03"],
+      "business_invariant": "未备案服务不可上线；生成内容默认带标识；价格、退款、赔偿不得由 AI 单独承诺"
+    },
+    {
+      "id": "SL-03",
+      "name": "feedback-loop",
+      "depends_on": ["SL-01"],
+      "surfaces": ["web-console", "notification-center"],
+      "requirements": ["R-04"],
+      "business_invariant": "Bad Case 只能进入回归队列，不得直接改线上提示词"
+    },
+    {
+      "id": "SL-04",
+      "name": "metrics-dashboard",
+      "depends_on": ["SL-01", "SL-03"],
+      "surfaces": ["metrics-dashboard"],
+      "requirements": ["R-05"],
+      "business_invariant": "成功必须同时满足 validated 且非 rework；原始调用量不得作为北极星指标"
+    },
+    {
+      "id": "SL-05",
+      "name": "scenario-templates",
+      "depends_on": ["SL-01", "SL-02"],
+      "surfaces": ["web-console"],
+      "requirements": ["R-06"],
+      "business_invariant": "模板创建不得跳过评测门禁或合规门禁"
+    },
+    {
+      "id": "SL-06",
+      "name": "billing-and-routing",
+      "depends_on": ["SL-04", "SL-05"],
+      "surfaces": ["web-console", "metrics-dashboard"],
+      "requirements": ["R-07", "R-08"],
+      "business_invariant": "降级必须显式标记原因；计费试算必须可解释，不得静默改价"
+    }
+  ]
+}
