@@ -36,6 +36,10 @@
 bash scripts/tag-lint.sh docs/cn/*.md handoff-cn/*.md
 ```
 
+## 发布状态
+
+- 本改造已推送到 `Zwh-creator/Product-to-Prod` 的 `cn-ai-ops-adaptation-pr` 分支，并开启 PR #1。[FOUND: https://github.com/Zwh-creator/Product-to-Prod/pull/1] [L5: GitHub PR 页面, 2026-11-25 读取]
+
 ## 来源
 
 上游仓库：https://github.com/naderelewa/Product-to-Prod （MIT）。本改造文档同样按 MIT 使用；引用来源见 `docs/cn/01-evidence-base.md`。

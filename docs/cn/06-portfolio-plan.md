@@ -40,7 +40,7 @@
 
 | 步 | 动作 | 产出 | 完成判据 | 闸门 |
 |---|---|---|---|---|
-| D0 | 确认 fork 通道：手动 fork 上游仓库，或给 GitHub 连接器授予 fork/建仓权限 | `Zwh-creator/Product-to-Prod` | 仓库可写、默认分支存在 | 阻塞项，见第 6 节 |
+| D0 | 手动 fork 上游仓库，并用一次性 PAT 推送改造分支 | `Zwh-creator/Product-to-Prod` + PR #1 | fork 可访问、PR 可合并 | 已完成，见第 6 节 [FOUND: https://github.com/Zwh-creator/Product-to-Prod/pull/1] [L5: GitHub PR 页面, 2026-11-25] |
 | D1 | 把 `README.cn-adaptation.md` 合并到 fork README 顶部，保留 MIT 与 provenance | 可点开的仓库首页 | 上游 badge 与许可证未被删除 | 无 |
 | D2 | 提交 `docs/cn/00`、`01`，核对每条 FOUND 的链接可打开 | 差异总览 + 证据账本 | 15 行证据全部有 URL 与日期；4 行转引被显式标注 | 自检 |
 | D3 | 提交 `02`，请一位真实产品/运营人复核开放问题是否问对人 | PRD + 开放问题队列 | Q1–Q7 每条有确认角色与阻断对象 | Gate 1（人） |
@@ -61,33 +61,22 @@
 | "上线后效果不好你怎么处理？" | 回到预声明场景：先判 PASS/PARTIAL/GAP/UNVERIFIED，再按原因类路由到 spec 或 backlog；不临时改 rubric。 |
 | "这和直接用 AI 写 PRD 有什么区别？" | plain chat 没有 lint、没有闸门、没有交接契约；这里每条主张可复查、审批权在人。[FOUND: https://github.com/naderelewa/Product-to-Prod#honest-comparison] |
 
-## 6. 当前阻塞与手动发布步骤
+## 6. 发布状态与复核入口
 
-本次会话中，GitHub 连接器对 `fork` 与 `create repository` 均返回 `403 Resource not accessible by integration`，本机也没有可用的 `git`/`gh` 凭据，因此**没有完成真实 fork**。[NEEDS-CONFIRMATION → 用户: 阻断 GitHub 发布，需手动 fork 或授权连接器写权限] 本地产物已按可推送结构生成在 `Product-to-Prod-CN-AI-Ops/`。
+- Fork 已建立：`Zwh-creator/Product-to-Prod`，默认分支 `main` 可访问。[FOUND: https://github.com/Zwh-creator/Product-to-Prod] [L5: GitHub 仓库页面, 2026-11-25 读取]
+- 改造分支：`cn-ai-ops-adaptation-pr`，从 `main` 派生，包含 23 个新增文件与 1 个提交。[FOUND: https://github.com/Zwh-creator/Product-to-Prod/tree/cn-ai-ops-adaptation-pr] [L5: GitHub 分支页面, 2026-11-25 读取]
+- PR #1 已开启，状态 open、可合并（mergeable: true）。[FOUND: https://github.com/Zwh-creator/Product-to-Prod/pull/1] [L5: GitHub PR 页面, 2026-11-25 读取]
+- 交接包 8 个文件的 sha256 封印从 Git blob 复核 8/8 一致，`approved: false` 未被改写。[FOUND: https://github.com/Zwh-creator/Product-to-Prod/blob/cn-ai-ops-adaptation-pr/handoff-cn/design-gate.json] [L5: GitHub 文件内容, 2026-11-25 读取]
+- 一次性 PAT 已用于推送；账号所有者应在 GitHub 撤销该 token。[NEEDS-CONFIRMATION → 账号所有者: 撤销推送用 PAT，不影响已推送内容]
 
-手动发布（在用户自己的终端执行，勿在本会话内重试被拒绝的权限）：
+复核命令（在 fork 根目录、该分支下）：
 
 ```bash
-# 1) 在网页端 fork https://github.com/naderelewa/Product-to-Prod
-git clone https://github.com/<你的账号>/Product-to-Prod.git
-cd Product-to-Prod
-
-# 2) 把本地产物复制进 clone（路径按本机实际填写）
-cp -R "<本地产物目录>/docs/cn" docs/
-cp -R "<本地产物目录>/handoff-cn" .
-cp "<本地产物目录>/README.cn-adaptation.md" .
-
-# 3) 合并 README 顶部内容，然后验证
 bash scripts/tag-lint.sh docs/cn/*.md handoff-cn/*.md
 bash tests/run-tests.sh
-
-# 4) 提交与推送
-git add docs/cn handoff-cn README.md
-git commit -m "docs(cn): evidence-tagged AI product ops adaptation"
-git push origin HEAD
 ```
 
-若希望给上游贡献而非只做个人 fork，可另开分支提交 PR；但作品集场景通常**个人 fork 更合适**，因为需要保留案例专属文档与自定义 README。
+本案例选择个人 fork 内的 PR，便于保留案例专属文档与自定义 README；若要向上游贡献，需要另外开一个针对上游仓库的 PR。
 
 ## 7. 完成定义（Definition of Done）
 

@@ -8,7 +8,7 @@
 
 ```bash
 # 在 fork 根目录（本机产物目录等价）
-bash scripts/tag-lint.sh docs/cn/00-adaptation-overview.md \
+bash scripts/tag-lint.sh README.cn-adaptation.md docs/cn/00-adaptation-overview.md \
   docs/cn/01-evidence-base.md docs/cn/02-cn-ai-ops-prd.md \
   docs/cn/03-rice-backlog-cn.md docs/cn/04-gtm-launch-plan-cn.md \
   docs/cn/05-release-verification-cn.md docs/cn/06-portfolio-plan.md \
@@ -20,15 +20,17 @@ bash scripts/tag-lint.sh docs/cn/00-adaptation-overview.md \
 
 ## 2. 本地执行结果（2026-11-25）
 
-用上游 `tag-lint.sh` 的规则副本对上述 16 个交付文件执行 `--delivery-final`：
+用上游 `tag-lint.sh` 的规则副本对上述 17 个交付文件执行 `--delivery-final`：
 
 ```text
-== TAG-LINT CLEAN: 0 violations across 16 file(s) ==
+== TAG-LINT CLEAN: 0 violations across 17 file(s) ==
 ```
 
 第一次运行发现 GTM「不可支持主张清单」同一行同时出现 FOUND 与 NEEDS-CONFIRMATION（T2），已用 `tag-lint:allow-multi` 标记为合法的映射表并复跑通过。`07-working-assumptions.md` 故意排除在交付检查之外，因为它是 HYPOTHESIS 的合法残留处。
 
 说明：本目录内的 `tag-lint.sh` 只是本地验证副本（远端直连因 TLS 握手失败）；推送到 fork 后应改用它自带的 `scripts/tag-lint.sh` 复核同一组文件。
+
+推送后在 PR 分支复核：17 个文件仍为 0 违规；交接包 8 个文件的哈希从 Git blob 重新计算，与 `.seal.txt` 全部一致。[FOUND: https://github.com/Zwh-creator/Product-to-Prod/pull/1] [L5: GitHub PR 页面, 2026-11-25 读取]
 
 ## 3. 完整性封印
 
