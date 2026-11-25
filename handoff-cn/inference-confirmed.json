@@ -1,0 +1,58 @@
+{
+  "package": "handoff-cn",
+  "confirmed": true,
+  "confirmed_at": "2026-11-25T12:20:00+08:00",
+  "mode": "PORTFOLIO_CASE_STUDY",
+  "rulings": [
+    {
+      "id": "Q1",
+      "state": "ACCEPTED-OPEN",
+      "confirmer_role": "案例发布负责人",
+      "ruling": "作品集案例没有真实企业基线，Reach/Impact 保留为演示输入",
+      "blocks": "真实排期与阈值定稿"
+    },
+    {
+      "id": "Q2",
+      "state": "ACCEPTED-OPEN",
+      "confirmer_role": "目标企业合规负责人",
+      "ruling": "标识实现方式为能力要求，不写死技术字段",
+      "blocks": "R-02 实现方案"
+    },
+    {
+      "id": "Q3",
+      "state": "ACCEPTED-OPEN",
+      "confirmer_role": "目标企业合规负责人",
+      "ruling": "备案材料清单以主管部门口径为准，本包只列准备项",
+      "blocks": "SC-13 检查清单"
+    },
+    {
+      "id": "Q4",
+      "state": "ACCEPTED-OPEN",
+      "confirmer_role": "目标企业数据负责人",
+      "ruling": "无埋点确认前 M1/M2 只能为 UNVERIFIED",
+      "blocks": "度量结论"
+    },
+    {
+      "id": "Q5",
+      "state": "ACCEPTED-OPEN",
+      "confirmer_role": "案例作者",
+      "ruling": "对外一律表述为公开报道转引，不声称已读原始报告",
+      "blocks": "来源强度表述"
+    },
+    {
+      "id": "Q6",
+      "state": "ACCEPTED-OPEN",
+      "confirmer_role": "目标企业业务负责人",
+      "ruling": "拟人化陪伴不进入本版本",
+      "blocks": "路线图边界"
+    },
+    {
+      "id": "Q7",
+      "state": "ACCEPTED-OPEN",
+      "confirmer_role": "目标企业架构负责人",
+      "ruling": "私有化部署不进入本版本",
+      "blocks": "路线图边界"
+    }
+  ],
+  "note": "作品集场景以 ACCEPTED-OPEN 显式接受全部开放项；真实运行必须由具名角色逐条关闭，不得继承本接受。"
+}
